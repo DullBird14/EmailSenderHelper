@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+    <!--<script  th:src="@{/js/upload.js}"></script>-->
+    <script type="text/javascript" src="../js/upload.js"></script>
+</head>
+<body>
+    <h1 th:inlines="text">文件上传</h1>
+    <form id="emailConfigForm">
+        发件服务器: <input type="text" name="emailHost" /><br/>
+        发件人邮箱: <input type="text" name="sendFromUser" /><br/>
+        <!--发件人密码: <input type="password" name="userPassWord" /><br/>-->
+        邮箱主题  : <input type="text" name="title" /><br/>
+        选择文件: <input type="file" name="filetest" /><br/>
+        测试节点:<input type="text" name="templateName" value="test.ftl" /><br/>
+<!--        收件人邮箱: <input type="text" name="sendToUsers" /><br/>
+        多个用“;”隔开。<br/>-->
+    </form>
+    <a id="emailConfigModify" >修改配置</a>&nbsp;&nbsp;<button id="emailConfigSave" onclick="saveConfig()">保存配置</button>
+<!--    <div>
+        <form method="post" enctype="multipart/form-data" action="/upload" >
+            <p>选择文件: <input type="file" name="filetest" /></p>
+            <p><input type="submit" value="提交"/></p>
+        </form>
+    </div>-->
+</body>
+</html>
