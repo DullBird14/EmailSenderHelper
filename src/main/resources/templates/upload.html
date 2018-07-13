@@ -92,7 +92,7 @@
 		    padding: 0 10px;
 		}
 		.div-item {
-	        width: 250px;
+	        width: 500px;
 		    height: 250px;
 		    border: 1px solid #acacac;
 		    display: inline-block;
@@ -105,10 +105,10 @@
 <body>
     <h1 class="up-title" th:inlines="text">文件上传</h1>
     <form class="up-form" id="emailConfigForm">
-    	<div class="up-row">
-    		<span class="sign">发件服务器:</span>
-    		<input type="text" name="emailHost" />
-    	</div>
+    	<!--<div class="up-row">-->
+    		<!--<span class="sign">发件服务器:</span>-->
+    		<!--<input type="text" name="emailHost" />-->
+    	<!--</div>-->
         <div class="up-row">
         	<span class="sign">发件人邮箱:</span>
         	<input type="text" name="sendFromUser" />
@@ -133,18 +133,12 @@
         	多个用“;”隔开。-->
         
         <div class="up-row ta-c">
-        	<!--<a id="emailConfigModify" >修改配置</a>&nbsp;&nbsp;-->
-        	<button class="up-btn" id="emailConfigModify">修改配置</button>
-        	<button class="up-btn" id="emailConfigSave" onclick="saveConfig()">保存配置</button>
+        	<a class="up-btn" id="emailConfigModify">保存配置</a>
+        	<a class="up-btn" id="emailConfigSave" onclick="saveConfig()">发送邮件</a>
     	</div>
     </form>
     
-	<!--<div>
-        <form method="post" enctype="multipart/form-data" action="/upload" >
-            <p>选择文件: <input type="file" name="filetest" /></p>
-            <p><input type="submit" value="提交"/></p>
-        </form>
-    </div>-->
+
     
     <!--用来显示多个div的容器-->
     <div id="divContainer" class="up-container">
@@ -155,37 +149,51 @@
     </div>
     
     <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
-    <!--<script  th:src="@{/js/upload.js}"></script>-->
     <script type="text/javascript" src="../js/upload.js"></script>
-    
     <script>
-		// 需要生成的所有div的字符串数组
-		var htmlStrArr = [
+        // 需要生成的所有div的字符串数组
+        var htmlStrArr = [
 //			'<div class="up-row">' +
 //	    		'<span class="sign">发件服务器:</span>' +
 //	    		'<input type="text" name="emailHost">' +
 //	    	'</div>',
-			'<div>第一个div的字符串</div>',
-			'<div>第二个div的字符串</div>',
+//         '<div>第一个div的字符串</div>',
+//			'<div>第二个div的字符串</div>',
 //			'<div class="up-row">' +
 //	    		'<span class="sign">发件服务器:</span>' +
 //	    		'<input type="text" name="emailHost">' +
 //	    	'</div>',
-			'<div>第三个div的字符串</div>',
-			'<div>第四个div的字符串</div>',
-			'<div>第五个div的字符串</div>',
-			'<div>第六个div的字符串</div>',
-			'<div>第七个div的字符串</div>',
-			'<div>第八个div的字符串</div>',
-		];
-		var divItemStr = '';
-		for(var i = 0; i < htmlStrArr.length; i ++){ // 向每个div外层套一层div
-			divItemStr += 
-				'<div class="div-item">' +
-					htmlStrArr[i] +
-				'</div>';
-		}
-		$('#divContainer').html(divItemStr);
-	</script>
+//			'<div>第三个div的字符串</div>',
+//			'<div>第四个div的字符串</div>',
+//			'<div>第五个div的字符串</div>',
+//			'<div>第六个div的字符串</div>',
+//			'<div>第七个div的字符串</div>',
+//			'<div>第八个div的字符串</div>',
+        ];
+        $.ajax({
+            type : "post",
+            url : "../getTemplate",
+            async : true,
+            //文件上传配置。
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(data){
+                htmlStrArr[0] = data["content"].toString().replace(/[\r|\n]|<#--.*?-->/g, "");
+                var divItemStr = '';
+                for(var i = 0; i < htmlStrArr.length; i ++){ // 向每个div外层套一层div
+                    divItemStr +=
+                        '<div class="div-item">' +
+                        htmlStrArr[i] +
+                        '</div>';
+                }
+                console.log(divItemStr);
+                $('#divContainer').html(divItemStr);
+            }
+        });
+
+
+
+    </script>
 </body>
 </html>

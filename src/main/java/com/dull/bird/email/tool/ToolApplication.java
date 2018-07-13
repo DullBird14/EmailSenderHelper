@@ -1,17 +1,15 @@
 package com.dull.bird.email.tool;
 
+import net.unicon.cas.client.configuration.EnableCasClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-//@Controller
-@SpringBootApplication()
+@SpringBootApplication
+//@EnableCasClient
 public class ToolApplication {
 
-//	@GetMapping("/test")
-//	public String test(){
-//		return "upload";
-//	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(ToolApplication.class, args);
 	}

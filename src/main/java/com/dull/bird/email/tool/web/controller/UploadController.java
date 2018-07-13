@@ -5,16 +5,20 @@ import com.dull.bird.email.tool.data.entity.ExeclAnalyzeResult;
 import com.dull.bird.email.tool.execl.ExeclAnalyze;
 import com.dull.bird.email.tool.service.ExeclService;
 import com.dull.bird.email.tool.service.MailService;
+import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UploadController {
@@ -23,7 +27,8 @@ public class UploadController {
     private ExeclService execlAnalyzeImp;
     @Autowired
     private MailService mailServiceImp;
-
+    @Autowired
+    private FreeMarkerConfigurer freeMarkerConfigurer;
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public String handleFileUpload(@RequestParam("filetest") MultipartFile fileStream) {
         try {
@@ -56,9 +61,21 @@ public class UploadController {
             return "error";
         }
 
-        if (errorList.size() == 0) {
+        if (errorList.size() != 0) {
             return errorList.toString();
         }
         return "success";
+    }
+    @RequestMapping(value = "/getTemplate")
+    public Map getTemplate(){
+        Map<String, String> result = new HashMap<>(16);
+        try {
+            Template template = freeMarkerConfigurer.getConfiguration().getTemplate("test.ftl");
+            result.put("name", "test.ftl");
+            result.put("content", template.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

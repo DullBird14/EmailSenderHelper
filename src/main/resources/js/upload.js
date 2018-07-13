@@ -3,17 +3,17 @@ $(document).ready(function(){
 });
 
 function init(){
+
     // $("#emailConfigSave").onclick(function(){
     //     saveConfig();
     // });
-    var a = $("#emailConfigSave");
-    console.log(a);
+    // var a = $("#emailConfigSave");
+    // console.log(a);
 }
 
 function saveConfig(){
     var emailConfigParam = $("#emailConfigForm").serialize();
     console.log(emailConfigParam);
-    // alert(emailConfigParam);
     var form = $("#emailConfigForm");
     console.log(form);
     var emailConfigParam = new FormData(document.getElementById("emailConfigForm"));
@@ -29,6 +29,7 @@ function saveConfig(){
         contentType: false,
         success : function(data){
             alert(data);
+            // console.log(data);
         }
     });
 }
